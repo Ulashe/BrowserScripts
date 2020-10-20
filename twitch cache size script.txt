@@ -1,0 +1,83 @@
+
+
+document.querySelector("#root > div > div.tw-flex.tw-flex-column.tw-flex-nowrap.tw-full-height > div > main > div.root-scrollable.scrollable-area.scrollable-area--suppress-scroll-x > div.simplebar-scroll-content > div > div > div.persistent-player.tw-elevation-0 > div > div.video-player > div > div.video-player__default-player.video-player__inactive > div > div:nth-child(5) > div > div.tw-flex.tw-mg-b-1.tw-mg-l-1.tw-mg-r-1 > div.player-controls__right-control-group.tw-align-items-center.tw-flex.tw-flex-grow-1.tw-justify-content-end > div:nth-child(1) > div:nth-child(2) > div > button").click()
+
+
+document.querySelector("#root > div > div.tw-flex.tw-flex-column.tw-flex-nowrap.tw-full-height > div > main > div.root-scrollable.scrollable-area.scrollable-area--suppress-scroll-x > div.simplebar-scroll-content > div > div > div.persistent-player.tw-elevation-0 > div > div.video-player > div > div.video-player__default-player > div > div:nth-child(5) > div > div.tw-flex.tw-mg-b-1.tw-mg-l-1.tw-mg-r-1 > div.player-controls__right-control-group.tw-align-items-center.tw-flex.tw-flex-grow-1.tw-justify-content-end > div:nth-child(1) > div.settings-menu-button-component.settings-menu-button-component--forced-dark-theme.tw-root--hover.tw-root--theme-dark > div > div > div > div > div > div:nth-child(5) > button").click()
+
+
+document.querySelector("#root > div > div.tw-flex.tw-flex-column.tw-flex-nowrap.tw-full-height > div > main > div.root-scrollable.scrollable-area.scrollable-area--suppress-scroll-x > div.simplebar-scroll-content > div > div > div.persistent-player.tw-elevation-0 > div > div.video-player > div > div.video-player__default-player > div > div:nth-child(5) > div > div.tw-flex.tw-mg-b-1.tw-mg-l-1.tw-mg-r-1 > div.player-controls__right-control-group.tw-align-items-center.tw-flex.tw-flex-grow-1.tw-justify-content-end > div:nth-child(1) > div.settings-menu-button-component.settings-menu-button-component--forced-dark-theme.tw-root--hover.tw-root--theme-dark > div > div > div > div > div > div:nth-child(4) > div > div > label > p").parentNode.previousSibling.click()
+
+
+
+
+
+setTimeout(function(){
+
+var trs = document.getElementsByClassName("tw-table-row")
+for(var i=0;i<trs.length;i++){trs[i].style.display="none"}
+
+var ps = document.querySelectorAll("[data-a-target='player-overlay-video-stats'] td p")
+;
+for(var i=0;i<ps.length;i++){if(ps[i].innerHTML=="Ara Bellek Boyutu" || ps[i].innerHTML=="Yürütme Hýzý" || ps[i].innerHTML=="FPS" || ps[i].innerHTML=="Video Çözünürlüðü"){ps[i].parentNode.parentNode.style.display="block"}}
+
+
+//var container = document.querySelector("[data-a-target='player-overlay-video-stats']")
+;
+//container.style.marginTop = "150px"
+;
+document.querySelector("[data-a-target='player-overlay-video-stats']").style.opacity = 0.5;
+document.querySelector("#root > div > div.tw-flex.tw-flex-column.tw-flex-nowrap.tw-full-height > div > main > div.channel-root__scroll-area--theatre-mode.scrollable-area.scrollable-area--suppress-scroll-x > div.simplebar-scroll-content > div > div > div.persistent-player.persistent-player--theatre.tw-elevation-0 > div > div.video-player > div > div.video-player__default-player.video-player__inactive > div > div.tw-root--theme-dark.tw-root--hover > div > div.simplebar-scroll-content > div > div > div").style.cursor = "move"
+
+},3000)
+
+setTimeout(function(){
+var elmnt = document.querySelector("[data-a-target='player-overlay-video-stats']");
+elmnt.parentNode.style.width = "1500px";
+elmnt.parentNode.parentNode.parentNode.classList.remove("tw-mg-1");
+elmnt.style.position = "absolute";
+var elmnt2 = document.querySelector("[data-a-target='player-overlay-video-stats'] div")
+dragElement(elmnt);
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (elmnt2) {
+    // if present, the header is where you move the DIV from:
+    elmnt2.onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+},1000)

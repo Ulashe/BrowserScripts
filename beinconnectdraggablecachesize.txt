@@ -1,0 +1,101 @@
+var video = document.getElementsByTagName('video')[0]
+// var doc = document.querySelector("#bmpui-id-214")
+var element = document.createElement("div")
+var element2 = document.createElement("div")
+var element3 = document.createElement("div")
+
+element.style.position = "absolute"
+
+element2.style.cursor="-webkit-grab"
+
+//element2.style.padding="7px"
+
+element.style.backgroundColor="rgba(0, 0, 0, 0.3)"
+
+element.style.borderRadius = "7px"
+element.style.top="0"
+
+element.id = "cacheSize"
+element2.id = "cacheSizeheader"
+
+element3.style.padding ="7px"
+element3.id = "remainingTime"
+
+element2.style.textAlign = "center"
+element2.style.padding = "7px 7px 3px 7px"
+element3.style.cursor = "-webkit-grab"
+element3.style.padding = "5px 7px 4px 7px"
+element3.style.textAlign = "center"
+
+video.parentNode.appendChild(element)
+
+element.appendChild(element2)
+element.appendChild(element3)
+
+
+function cacheSize(){
+	var num = video.buffered.end(0) - video.currentTime
+	element2.innerHTML = num.toFixed(2)
+}
+
+setInterval(cacheSize,1000)
+
+dragElement(element)
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header") ||
+	document.getElementById("remainingTime")) {
+    /* if present, the header is where you move the DIV from:*/
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+    document.getElementById("remainingTime").onmousedown = dragMouseDown;
+  } else {
+    /* otherwise, move the DIV from anywhere inside the DIV:*/
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    /* stop moving when mouse button is released:*/
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+
+
+function remainingTime(){
+  if(video.duration-video.currentTime < 3600){
+    element3.innerHTML = Math.floor((video.duration-video.currentTime)/60)+":"
+      +((video.duration-video.currentTime)%60).toFixed(0)
+  } else{
+    element3.innerHTML = Math.floor((video.duration-video.currentTime)/3600)+":"
+      + Math.floor(((video.duration-video.currentTime)%3600)/60)+":" 
+      + ((video.duration-video.currentTime)%60).toFixed(0)
+  }
+}
+
+setInterval(remainingTime,1000)
